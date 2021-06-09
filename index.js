@@ -3,7 +3,8 @@ const app = express()
 const cors = require('cors')
 
 const { initializeDB } = require('./db/db.connect.js')
-const { errorHandler, routeNotFound } = require('./middlewares/index')
+const { errorHandler, routeNotFound, auth } = require('./middlewares/index')
+const { login, signUp } = require('./routes/index')
 
 const PORT = process.env.PORT || 3030
 
@@ -12,6 +13,9 @@ initializeDB()
 
 app.use(express.json())
 app.use(cors())
+
+app.use('/login', login)
+app.use('/signup', signUp)
 
 app.get('/', (request, response) => {
   response.send('Welcome to Fit-Tube REST Api!')
